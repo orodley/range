@@ -1,6 +1,5 @@
 (defpackage :range
-  (:use common-lisp))
-
+  (:use common-lisp named-readtables))
 (in-package :range)
 
 (defun build-range (range-string)
@@ -19,11 +18,15 @@
          (end (read-from-string (if (= (length sections) 3)
                                   (third sections)
                                   (second sections)))))
-    (loop for n from start to end by step collecting n)))
+    (list 'quote (loop for n from start to end by step collecting n))))
 
-(defun sharp-left-bracket (stream char)
-  (declare (ignore char))
-  (coerce (loop for char = (read-char stream)
-                until (char= char #\])
-                collecting char)
-          'string))
+(defun sharp-left-bracket (stream char args)
+  (declare (ignore char args))
+  (build-range (coerce (loop for char = (read-char stream)
+                             until (char= char #\])
+                             collecting char)
+                       'string)))
+
+(defreadtable range
+  (:merge :standard)
+  (:dispatch-macro-char #\# #\[ #'sharp-left-bracket))
