@@ -20,3 +20,10 @@
                                   (third sections)
                                   (second sections)))))
     (loop for n from start to end by step collecting n)))
+
+(defun sharp-left-bracket (stream char)
+  (declare (ignore char))
+  (coerce (loop for char = (read-char stream)
+                until (char= char #\])
+                collecting char)
+          'string))
