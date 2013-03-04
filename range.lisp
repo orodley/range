@@ -19,4 +19,4 @@
          (end (read-from-string (if (= (length sections) 3)
                                   (third sections)
                                   (second sections)))))
-    (values start step end)))
+    (loop for n from start to end by step collecting n)))
