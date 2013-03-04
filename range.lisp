@@ -8,7 +8,7 @@
   (declare (string range-string))
   ;; Check that the range is well-formed
   (unless (cl-ppcre:scan "\\d+(,\\d+)?\\.\\.\\d+" range-string)
-    (error "Badly formed range [~A]" range-string))
+    (error "Badly formed range #[~A]" range-string))
   (let* ((sections (cl-ppcre:all-matches-as-strings "\\d+" range-string))
          (start (read-from-string (first sections)))
          (step (if (= (length sections) 3)
@@ -18,7 +18,14 @@
          (end (read-from-string (if (= (length sections) 3)
                                   (third sections)
                                   (second sections)))))
-    (list 'quote (loop for n from start to end by step collecting n))))
+    (list 'quote (cond
+                   ((zerop step) 
+                    (error "Step is zero in #[~A]" range-string))
+                   ((plusp step)
+                    (loop for n from start to end by step collecting n))
+                   ((minusp step)
+                    (loop for n from start downto end by (abs step)
+                          collecting n))))))
 
 (defun sharp-left-bracket (stream char args)
   (declare (ignore char args))
