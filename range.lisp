@@ -6,7 +6,6 @@
   "Given the text within a range expression, e.g.:
    `1..100' or `32,35..47' or `10,9..0', return the corresponding list"
   (declare (string range-string))
-  (declare (optimize (debug 3)))
   (unless (cl-ppcre:scan 
             "(?x) # Enable optional whitespace + comments
              ^[ ]*
