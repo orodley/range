@@ -6,6 +6,9 @@ ranges is that it won't construct infinite lists, e.g. `[1..]`
 For example:
 
 ```common-lisp
+CL-USER> (asdf:load-system :range)
+[snip]
+T
 CL-USER> (in-package :range)
 #<PACKAGE "RANGE">
 RANGE> (in-readtable range)
