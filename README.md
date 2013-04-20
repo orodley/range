@@ -1,7 +1,9 @@
 This package provides Haskell-style ranges in Common Lisp, using a reader macro.
 It performs fairly robust checking on the range to make sure it's well formed.
 The only difference (as far as I know) between this macro and Haskell-style
-ranges is that it won't construct infinite lists, e.g. `[1..]`
+ranges is that it won't construct infinite lists, e.g. `[1..]`, and that it only
+allows literal numbers in ranges, not arbitrary expressions. The latter may be
+added at some point in the future.
 
 For example:
 
